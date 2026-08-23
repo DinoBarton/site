@@ -104,43 +104,43 @@ function App() {
     home: {
       title: 'welcome to my website',
       lines: [
-        'This area is your main content column.',
-        'Use this to check spacing and proportions before styling.',
+        'placeholder',
+        'placeholder',
       ],
     },
     about: {
       title: 'about me',
       lines: [
-        'Add your short intro, interests, and what this site is about.',
-        'You can also add quick facts here later.',
+        'placeholder',
+        'placeholder',
       ],
     },
     blog: {
       title: 'blog',
       lines: [
-        'Post short updates, ideas, and links.',
-        'This can become a full blog index later.',
+        'placeholder',
+        'placeholder',
       ],
     },
     projects: {
       title: 'projects',
       lines: [
-        'Showcase current and past work.',
-        'Add screenshots, stack, and short writeups.',
+        'placeholder',
+        'placeholder',
       ],
     },
     links: {
       title: 'links',
       lines: [
-        'Share your favorite websites, blogroll, and resources.',
-        'Great place for indie web / neocities friends too.',
+        'placeholder',
+        'placeholder',
       ],
     },
     contact: {
       title: 'contact',
       lines: [
-        'Add email or social links you want to share.',
-        'You can also add a guestbook link here later.',
+        'placeholder',
+        'placeholder',
       ],
     },
   }
@@ -199,7 +199,7 @@ function App() {
 
             <div className="side-box box">
               <h2>changelog</h2>
-              <p>latest update goes here</p>
+              <p>updates</p>
             </div>
           </div>
         </aside>
@@ -233,7 +233,7 @@ function App() {
 
       <div className="bottom">
         <div className="visitcount box">visitor counter placeholder</div>
-        <footer className="footer box">© your name</footer>
+        <footer className="footer box">© Dino</footer>
       </div>
     </div>
   )
