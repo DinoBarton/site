@@ -1,17 +1,23 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
 
 // Import routes
 const examplesRouter = require('./routes/examples');
+const visitsRouter = require('./routes/visits');
 const errorHandler = require('./middleware/errorHandler');
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
+  credentials: true,
+}));
 app.use(express.json());
+app.use(cookieParser());
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/dinolibre', {
@@ -28,6 +34,7 @@ app.get('/', (req, res) => {
 
 // API Routes
 app.use('/api/examples', examplesRouter);
+app.use('/api/visits', visitsRouter);
 
 // Error handling middleware
 app.use(errorHandler);

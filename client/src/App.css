@@ -173,6 +173,12 @@
   gap: 12px;
 }
 
+.visitcount {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
 .footer {
   text-align: center;
 }

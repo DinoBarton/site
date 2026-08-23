@@ -14,12 +14,22 @@ function formatLondonTime() {
   }).format(new Date())
 }
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
 function App() {
   const [londonTime, setLondonTime] = useState(formatLondonTime)
   const [weatherTheme, setWeatherTheme] = useState('weather-default')
   const [currentPage, setCurrentPage] = useState('home')
+  const [visitCounts, setVisitCounts] = useState(null)
 
   useTypewriterTitle(TAB_TITLES, { typeSpeed: 150, pauseTime: 3000 })
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/visits/hit`, { method: 'POST', credentials: 'include' })
+      .then((res) => res.json())
+      .then(setVisitCounts)
+      .catch((error) => console.error(error))
+  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -232,7 +242,16 @@ function App() {
       </div>
 
       <div className="bottom">
-        <div className="visitcount box">visitor counter placeholder</div>
+        <div className="visitcount box">
+          {visitCounts ? (
+            <>
+              <span>total visits: {visitCounts.totalVisits}</span>
+              <span>unique visitors: {visitCounts.uniqueVisitors}</span>
+            </>
+          ) : (
+            'loading visitor count...'
+          )}
+        </div>
         <footer className="footer box">© Dino</footer>
       </div>
     </div>
