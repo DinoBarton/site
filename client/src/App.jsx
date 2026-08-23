@@ -1,121 +1,241 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { useTypewriterTitle } from './hooks/useTypewriterTitle'
+
+const TAB_TITLES = ['Dinos website', 'welcome!']
+
+function formatLondonTime() {
+  return new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/London',
+    weekday: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  }).format(new Date())
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [londonTime, setLondonTime] = useState(formatLondonTime)
+  const [weatherTheme, setWeatherTheme] = useState('weather-default')
+  const [currentPage, setCurrentPage] = useState('home')
+
+  useTypewriterTitle(TAB_TITLES, { typeSpeed: 150, pauseTime: 3000 })
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLondonTime(formatLondonTime())
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
+    const weatherMap = {
+      clear: { theme: 'weather-clear' },
+      partlyCloudy: { theme: 'weather-cloudy' },
+      cloudy: { theme: 'weather-cloudy' },
+      fog: { theme: 'weather-fog' },
+      rain: { theme: 'weather-rain' },
+      snow: { theme: 'weather-snow' },
+      thunder: { theme: 'weather-thunder' },
+      unknown: { theme: 'weather-default' },
+    }
+
+    const getWeatherFromCode = (code) => {
+      if (code === 0) return weatherMap.clear
+      if ([1, 2].includes(code)) return weatherMap.partlyCloudy
+      if (code === 3) return weatherMap.cloudy
+      if ([45, 48].includes(code)) return weatherMap.fog
+      if (
+        [51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)
+      ) {
+        return weatherMap.rain
+      }
+      if ([71, 73, 75, 77, 85, 86].includes(code)) return weatherMap.snow
+      if ([95, 96, 99].includes(code)) return weatherMap.thunder
+      return weatherMap.unknown
+    }
+
+    const loadWeather = async () => {
+      const response = await fetch(
+        'https://api.open-meteo.com/v1/forecast?latitude=51.5072&longitude=-0.1276&current=weather_code&timezone=Europe%2FLondon',
+      )
+
+      if (!response.ok) {
+        throw new Error(`Weather request failed: ${response.status}`)
+      }
+
+      const data = await response.json()
+      const weatherCode = data?.current?.weather_code
+
+      if (typeof weatherCode !== 'number') {
+        throw new Error('Weather response missing weather code')
+      }
+
+      const weather = getWeatherFromCode(weatherCode)
+      setWeatherTheme(weather.theme)
+    }
+
+    loadWeather().catch((error) => {
+      setWeatherTheme('weather-default')
+      console.error(error)
+    })
+
+    const weatherTimer = setInterval(() => {
+      loadWeather().catch((error) => {
+        setWeatherTheme('weather-default')
+        console.error(error)
+      })
+    }, 60 * 1000)
+
+    return () => clearInterval(weatherTimer)
+  }, [])
+
+  const navItems = [
+    { id: 'home', label: 'home' },
+    { id: 'about', label: 'about me' },
+    { id: 'blog', label: 'blog' },
+    { id: 'projects', label: 'projects' },
+    { id: 'links', label: 'links' },
+    { id: 'contact', label: 'contact' },
+  ]
+
+  const pageContent = {
+    home: {
+      title: 'welcome to my website',
+      lines: [
+        'This area is your main content column.',
+        'Use this to check spacing and proportions before styling.',
+      ],
+    },
+    about: {
+      title: 'about me',
+      lines: [
+        'Add your short intro, interests, and what this site is about.',
+        'You can also add quick facts here later.',
+      ],
+    },
+    blog: {
+      title: 'blog',
+      lines: [
+        'Post short updates, ideas, and links.',
+        'This can become a full blog index later.',
+      ],
+    },
+    projects: {
+      title: 'projects',
+      lines: [
+        'Showcase current and past work.',
+        'Add screenshots, stack, and short writeups.',
+      ],
+    },
+    links: {
+      title: 'links',
+      lines: [
+        'Share your favorite websites, blogroll, and resources.',
+        'Great place for indie web / neocities friends too.',
+      ],
+    },
+    contact: {
+      title: 'contact',
+      lines: [
+        'Add email or social links you want to share.',
+        'You can also add a guestbook link here later.',
+      ],
+    },
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="site-shell">
+      <div className="mobile-nav-component">
+        <div className="topnav box">
+          <a href="#" className="logo">
+            Dino's corner
+          </a>
+          <button type="button" className="menu-button">
+            menu
+          </button>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      </div>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+      {/*<header id="header-component">
+        <div className="header box">
+          <h1>Welcome to my Website</h1>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+      </header>*/} 
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <div className="content">
+        <aside id="left-sidebar-component">
+          <div className="leftbar">
+            <div className="side-box box">
+              <h2>navigation</h2>
+              <ul className="nav-list">
+                {navItems.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      onClick={(event) => {
+                        event.preventDefault()
+                        setCurrentPage(item.id)
+                      }}
+                      aria-current={currentPage === item.id ? 'page' : undefined}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={`side-box box my-time ${weatherTheme}`}>
+              <h2>my time (London)</h2>
+              <p>{londonTime}</p>
+            </div>
+
+            <div className="side-box box">
+              <h2>status</h2>
+              <p>working on layout tests</p>
+            </div>
+
+            <div className="side-box box">
+              <h2>changelog</h2>
+              <p>latest update goes here</p>
+            </div>
+          </div>
+        </aside>
+
+        <main id="home" className="main box">
+          <div className="welcome-post">
+            <h2>{pageContent[currentPage].title}</h2>
+            {pageContent[currentPage].lines.map((line) => (
+              <p key={line}>{line}</p>
+            ))}
+          </div>
+        </main>
+
+        <aside id="right-sidebar-component">
+          <div className="rightbar">
+            <div className="side-box box">
+              <h2>style</h2>
+              <button type="button">switch theme</button>
+            </div>
+            <div className="side-box box">
+              <h2>buttons area</h2>
+              <p>widget placeholders</p>
+            </div>
+            <div className="side-box box">
+              <h2>chat</h2>
+              <div className="chat-placeholder">chat box placeholder</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div className="bottom">
+        <div className="visitcount box">visitor counter placeholder</div>
+        <footer className="footer box">© your name</footer>
+      </div>
+    </div>
   )
 }
 
