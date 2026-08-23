@@ -1,0 +1,19 @@
+{
+  "name": "dinolibre",
+  "version": "1.0.0",
+  "description": "Dinolibre - A MERN Stack Application",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\"",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": ["MERN", "MongoDB", "Express", "React", "Node.js"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
