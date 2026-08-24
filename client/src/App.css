@@ -15,6 +15,11 @@
   box-sizing: border-box;
 }
 
+hr {
+  border: none;
+  border-top: 1px solid #000;
+}
+
 .mobile-nav-component .topnav {
   display: flex;
   justify-content: space-between;
@@ -73,6 +78,11 @@
 
 .my-time p {
   margin: 0;
+}
+
+.admin-box {
+  display: flex;
+  justify-content: center;
 }
 
 .my-time {
@@ -185,6 +195,55 @@
 
 .guestbook-entry p {
   margin: 4px 0 0;
+}
+
+.blog {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.blog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px dashed #777;
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.blog-form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.blog-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.blog-post h3 {
+  margin: 0 0 4px;
+}
+
+.blog-post-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.admin-login-error {
+  color: #b00020;
+  margin: 0;
+  font-size: 0.85rem;
 }
 
 .bottom {

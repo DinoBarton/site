@@ -10,6 +10,8 @@ const app = express();
 const examplesRouter = require('./routes/examples');
 const visitsRouter = require('./routes/visits');
 const guestbookRouter = require('./routes/guestbook');
+const adminRouter = require('./routes/admin');
+const blogRouter = require('./routes/blog');
 const errorHandler = require('./middleware/errorHandler');
 
 // Middleware
@@ -37,6 +39,8 @@ app.get('/', (req, res) => {
 app.use('/api/examples', examplesRouter);
 app.use('/api/visits', visitsRouter);
 app.use('/api/guestbook', guestbookRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/blog', blogRouter);
 
 // Error handling middleware
 app.use(errorHandler);

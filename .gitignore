@@ -24,6 +24,9 @@ dist/
 build/
 out/
 
+# Runtime data
+server/data/
+
 # Logs
 logs/
 *.log

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { useTypewriterTitle } from './hooks/useTypewriterTitle'
 import Guestbook from './components/Guestbook'
+import Blog from './components/Blog'
+import AdminLogin from './components/AdminLogin'
 
 const TAB_TITLES = ['Dinos website', 'welcome!']
 
@@ -22,8 +24,16 @@ function App() {
   const [weatherTheme, setWeatherTheme] = useState('weather-default')
   const [currentPage, setCurrentPage] = useState('home')
   const [visitCounts, setVisitCounts] = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useTypewriterTitle(TAB_TITLES, { typeSpeed: 150, pauseTime: 3000 })
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/admin/me`, { credentials: 'include' })
+      .then((res) => res.json())
+      .then((data) => setIsAdmin(Boolean(data.isAdmin)))
+      .catch((error) => console.error(error))
+  }, [])
 
   useEffect(() => {
     fetch(`${API_URL}/api/visits/hit`, { method: 'POST', credentials: 'include' })
@@ -164,9 +174,6 @@ function App() {
           <a href="#" className="logo">
             Dino's corner
           </a>
-          <button type="button" className="menu-button">
-            menu
-          </button>
         </div>
       </div>
 
@@ -218,6 +225,12 @@ function App() {
                 <h2>guestbook</h2>
                 <Guestbook />
               </>
+            ) : currentPage === 'blog' ? (
+              <>
+                <h2>blog</h2>
+                <hr />
+                <Blog isAdmin={isAdmin} />
+              </>
             ) : (
               <>
                 <h2>{pageContent[currentPage].title}</h2>
@@ -242,6 +255,11 @@ function App() {
             <div className={`side-box box my-time ${weatherTheme}`}>
               <h2>my time (London)</h2>
               <p>{londonTime}</p>
+            </div>
+
+            <div className="side-box box admin-box">
+              <h2>admin</h2>
+              <AdminLogin isAdmin={isAdmin} onLoginChange={setIsAdmin} />
             </div>
           </div>
         </aside>
