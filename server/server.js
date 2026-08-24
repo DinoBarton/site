@@ -9,6 +9,7 @@ const app = express();
 // Import routes
 const examplesRouter = require('./routes/examples');
 const visitsRouter = require('./routes/visits');
+const guestbookRouter = require('./routes/guestbook');
 const errorHandler = require('./middleware/errorHandler');
 
 // Middleware
@@ -35,6 +36,7 @@ app.get('/', (req, res) => {
 // API Routes
 app.use('/api/examples', examplesRouter);
 app.use('/api/visits', visitsRouter);
+app.use('/api/guestbook', guestbookRouter);
 
 // Error handling middleware
 app.use(errorHandler);

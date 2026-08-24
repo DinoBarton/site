@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { useTypewriterTitle } from './hooks/useTypewriterTitle'
+import Guestbook from './components/Guestbook'
 
 const TAB_TITLES = ['Dinos website', 'welcome!']
 
@@ -108,6 +109,7 @@ function App() {
     { id: 'projects', label: 'projects' },
     { id: 'links', label: 'links' },
     { id: 'contact', label: 'contact' },
+    { id: 'guestbook', label: 'guestbook' },
   ]
 
   const pageContent = {
@@ -197,11 +199,6 @@ function App() {
               </ul>
             </div>
 
-            <div className={`side-box box my-time ${weatherTheme}`}>
-              <h2>my time (London)</h2>
-              <p>{londonTime}</p>
-            </div>
-
             <div className="side-box box">
               <h2>status</h2>
               <p>working on layout tests</p>
@@ -216,10 +213,19 @@ function App() {
 
         <main id="home" className="main box">
           <div className="welcome-post">
-            <h2>{pageContent[currentPage].title}</h2>
-            {pageContent[currentPage].lines.map((line) => (
-              <p key={line}>{line}</p>
-            ))}
+            {currentPage === 'guestbook' ? (
+              <>
+                <h2>guestbook</h2>
+                <Guestbook />
+              </>
+            ) : (
+              <>
+                <h2>{pageContent[currentPage].title}</h2>
+                {pageContent[currentPage].lines.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
+              </>
+            )}
           </div>
         </main>
 
@@ -227,15 +233,15 @@ function App() {
           <div className="rightbar">
             <div className="side-box box">
               <h2>style</h2>
-              <button type="button">switch theme</button>
+              <p>style placeholder</p>
             </div>
             <div className="side-box box">
               <h2>buttons area</h2>
               <p>widget placeholders</p>
             </div>
-            <div className="side-box box">
-              <h2>chat</h2>
-              <div className="chat-placeholder">chat box placeholder</div>
+            <div className={`side-box box my-time ${weatherTheme}`}>
+              <h2>my time (London)</h2>
+              <p>{londonTime}</p>
             </div>
           </div>
         </aside>
