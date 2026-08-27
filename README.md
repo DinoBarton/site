@@ -2,27 +2,6 @@
 
 A full-stack web application built with MongoDB, Express, React, and Node.js (MERN).
 
-## Project Structure
-
-```
-dinolibre/
-├── server/              # Express backend server
-│   ├── package.json
-│   ├── server.js       # Entry point
-│   ├── .env.example    # Environment variables template
-│   ├── routes/         # API route handlers
-│   ├── models/         # MongoDB models
-│   └── middleware/     # Custom middleware
-├── client/             # React frontend (Vite)
-│   ├── package.json
-│   ├── src/
-│   ├── public/
-│   └── vite.config.js
-├── package.json        # Root package.json for concurrently running
-├── .gitignore
-└── README.md
-```
-
 ## Installation
 
 ### Prerequisites
