@@ -119,18 +119,38 @@
 
 .blog-form { border: 1px dashed #777; border-radius: 6px; padding: 10px; }
 .blog-form-actions, .blog-post-actions { display: flex; gap: 8px; }
-.blog-posts { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
-.blog-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; padding: 12px; border: 1px solid #777; }
+.blog-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.blog-filters input { flex: 1 1 220px; }
+.blog-filters select { flex: 0 1 180px; }
+.blog-posts { column-width: 220px; column-count: 3; column-gap: 12px; }
+.blog-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; margin: 0 0 12px; padding: 12px; border: 1px solid #777; break-inside: avoid; }
+.blog-card img, .blog-featured-image { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .blog-card h3 { margin: 0 0 4px; }
 .blog-card p { margin: 0; }
 .blog-card small, .blog-post-page small { color: var(--muted-text, #aaa); }
 .blog-post-page { display: flex; flex-direction: column; gap: 10px; }
 .blog-post-page h2, .blog-post-page p { margin: 0; }
+.blog-category, .blog-tags span, .blog-preview-banner { color: var(--accent-color, #d59b28); font-size: 0.8rem; }
+.blog-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.blog-markdown { line-height: 1.65; }
+.blog-markdown h1, .blog-markdown h2, .blog-markdown h3 { margin: 18px 0 8px; }
+.blog-markdown p, .blog-markdown ul, .blog-markdown ol { margin: 8px 0; }
+.blog-markdown a { overflow-wrap: anywhere; }
+.blog-markdown pre { max-width: 100%; overflow-x: auto; padding: 12px; background: rgba(127, 127, 127, 0.16); }
+.blog-markdown code { font-family: monospace; }
+.blog-markdown :not(pre) > code { padding: 2px 4px; background: rgba(127, 127, 127, 0.16); }
+.related-posts { display: flex; flex-direction: column; gap: 8px; border-top: 1px dashed #777; padding-top: 12px; }
+.related-posts h3 { margin: 0; }
+.related-posts a { display: flex; justify-content: space-between; gap: 10px; }
+.related-posts small { white-space: nowrap; }
+.blog-preview-link { margin: 0; }
 
 .blog-manager { border-top: 1px dashed #777; padding-top: 12px; }
 .blog-manager h3, .blog-manager h4 { margin: 0 0 8px; }
 .blog-status-field { display: flex; align-items: center; gap: 8px; }
 .blog-status-field select { padding: 4px 6px; }
+.blog-upload-field { display: flex; flex-direction: column; gap: 4px; }
+.blog-upload-field small { color: var(--muted-text, #aaa); }
 .blog-manager-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
 .blog-manager-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px; border: 1px solid #777; }
 .blog-manager-row > div:first-child { display: flex; flex-direction: column; gap: 4px; }
@@ -140,6 +160,19 @@
 
 .admin-login-form { display: flex; flex-direction: column; align-items: center; gap: 6px; }
 .admin-login-error { color: #b00020; margin: 0; font-size: 0.85rem; }
+.admin-dashboard { display: flex; flex-direction: column; gap: 20px; }
+.admin-section { border-top: 1px dashed #777; padding-top: 12px; }
+.admin-section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.admin-section-heading h3 { margin: 0 0 8px; }
+.admin-section-heading span { color: var(--muted-text, #aaa); font-size: 0.85rem; }
+.admin-entry-list { display: flex; flex-direction: column; gap: 8px; }
+.admin-entry-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 8px; border: 1px solid #777; }
+.admin-entry-row > div { min-width: 0; }
+.admin-entry-row small { display: block; color: var(--muted-text, #aaa); }
+.admin-entry-row p { margin: 4px 0 0; }
+.confirm-dialog-backdrop { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 16px; background: rgba(0, 0, 0, 0.65); }
+.confirm-dialog { width: min(100%, 360px); padding: 16px; border: 1px solid var(--border-color, #f5f5f5); background: var(--surface-color, #000); color: var(--page-text); }
+.confirm-dialog h4, .confirm-dialog p { margin-top: 0; }
 
 .system-stats { text-align: center; }
 .system-stats p { margin: 10px 0 0; color: var(--muted-text, #aaa); font-size: 0.85rem; }

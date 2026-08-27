@@ -1,7 +1,18 @@
 const express = require('express');
 const GuestbookEntry = require('../models/GuestbookEntry');
+const requireAdmin = require('../middleware/requireAdmin');
 
 const router = express.Router();
+
+// Admin: list entries for moderation
+router.get('/admin', requireAdmin, async (req, res) => {
+  try {
+    const entries = await GuestbookEntry.find().sort({ createdAt: -1 });
+    res.json(entries);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // Get all guestbook entries, newest first
 router.get('/', async (req, res) => {
@@ -25,6 +36,17 @@ router.post('/', async (req, res) => {
   try {
     const entry = await GuestbookEntry.create({ name, message });
     res.status(201).json(entry);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Admin: remove a guestbook entry
+router.delete('/:id', requireAdmin, async (req, res) => {
+  try {
+    const entry = await GuestbookEntry.findByIdAndDelete(req.params.id);
+    if (!entry) return res.status(404).json({ message: 'Entry not found' });
+    res.json({ message: 'Entry deleted' });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }

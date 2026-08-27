@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -15,6 +16,7 @@ const blogRouter = require('./routes/blog');
 const errorHandler = require('./middleware/errorHandler');
 const ticker = require('./routes/ticker');
 const systemStats = require('./routes/systemStats');
+const uploadsRouter = require('./routes/uploads');
 
 // Middleware
 app.use(cors({
@@ -23,6 +25,10 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(cookieParser());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+  index: false,
+  dotfiles: 'deny',
+}));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/dinolibre', {
@@ -45,6 +51,7 @@ app.use('/api/admin', adminRouter);
 app.use('/api/blog', blogRouter);
 app.use('/api/ticker', ticker);
 app.use('/api/system-stats', systemStats);
+app.use('/api/uploads', uploadsRouter);
 
 // Error handling middleware
 app.use(errorHandler);

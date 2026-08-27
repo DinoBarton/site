@@ -24,6 +24,10 @@
   background: #eee6d8;
 }
 
+:root[data-theme='light'] .box:hover {
+  border-color: #d59b28;
+}
+
 :root[data-theme='light'] .ticker-item {
   border-right-color: #d8cdbd;
 }
@@ -50,4 +54,9 @@
 
 :root[data-theme='light'] .usage-ring {
   --ring-track: #e2d9cb;
+}
+
+:root[data-theme='dark'] .blog-category,
+:root[data-theme='dark'] .blog-tags span {
+  color: #A020F0;
 }

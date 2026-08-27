@@ -41,6 +41,7 @@ client/build/
 
 # Server
 server/node_modules/
+server/uploads/
 
 # Local planning notes
 FEATURE-IDEAS.md

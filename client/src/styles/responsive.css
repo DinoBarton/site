@@ -15,3 +15,15 @@
     width: 100%;
   }
 }
+
+@media (max-width: 700px) {
+  .blog-posts {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 460px) {
+  .blog-posts {
+    column-count: 1;
+  }
+}

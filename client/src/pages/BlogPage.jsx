@@ -1,13 +1,11 @@
 import Blog from '../components/Blog'
-import BlogManager from '../components/BlogManager'
 
-function BlogPage({ isAdmin }) {
+function BlogPage() {
   return (
     <>
       <h2>blog</h2>
       <hr />
       <Blog />
-      {isAdmin && <BlogManager />}
     </>
   )
 }

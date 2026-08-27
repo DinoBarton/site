@@ -8,6 +8,7 @@ import './styles/responsive.css'
 import { useTypewriterTitle } from './hooks/useTypewriterTitle'
 import AppLayout from './components/AppLayout'
 import About from './pages/About'
+import AdminDashboard from './pages/AdminDashboard'
 import BlogPage from './pages/BlogPage'
 import BlogPostPage from './pages/BlogPostPage'
 import Contact from './pages/Contact'
@@ -27,6 +28,7 @@ const pageComponents = {
   links: Links,
   contact: Contact,
   guestbook: GuestbookPage,
+  admin: AdminDashboard,
 }
 
 function getPageFromLocation() {
@@ -38,11 +40,17 @@ function getPostIdentifier() {
   return window.location.hash.slice(1).split('/')[1] || ''
 }
 
+function getPreviewToken() {
+  const [page, type, token] = window.location.hash.slice(1).split('/')
+  return page === 'blog' && type === 'preview' ? token || '' : ''
+}
+
 function App() {
   const [currentPage, setCurrentPage] = useState(getPageFromLocation)
   const [visitCounts, setVisitCounts] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
   const [postIdentifier, setPostIdentifier] = useState(getPostIdentifier)
+  const [previewToken, setPreviewToken] = useState(getPreviewToken)
   const [isLightMode, setIsLightMode] = useState(() => {
     return localStorage.getItem('dinolibre-theme') === 'light'
   })
@@ -72,6 +80,7 @@ function App() {
     const handleHashChange = () => {
       setCurrentPage(getPageFromLocation())
       setPostIdentifier(getPostIdentifier())
+      setPreviewToken(getPreviewToken())
     }
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
@@ -82,7 +91,7 @@ function App() {
     window.location.assign(`#${page}`)
   }
 
-  const Page = currentPage === 'blog' && postIdentifier
+  const Page = currentPage === 'blog' && (postIdentifier || previewToken)
     ? BlogPostPage
     : pageComponents[currentPage]
 
@@ -96,7 +105,7 @@ function App() {
       onThemeChange={setIsLightMode}
       visitCounts={visitCounts}
     >
-      <Page isAdmin={isAdmin} identifier={postIdentifier} />
+      <Page isAdmin={isAdmin} identifier={previewToken ? 'preview' : postIdentifier} previewToken={previewToken} />
     </AppLayout>
   )
 }

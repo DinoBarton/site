@@ -12,6 +12,7 @@ const navItems = [
   { id: 'links', label: 'links' },
   { id: 'contact', label: 'contact' },
   { id: 'guestbook', label: 'guestbook' },
+  { id: 'admin', label: 'admin dashboard' },
 ]
 
 function AppLayout({
@@ -43,15 +44,17 @@ function AppLayout({
                 <legend>navigation</legend>
                 <ul className="nav-list">
                   {navItems.map((item) => (
-                    <li key={item.id}>
-                      <a
-                        href={`#${item.id}`}
-                        onClick={(event) => handleNavigation(event, item.id)}
-                        aria-current={currentPage === item.id ? 'page' : undefined}
-                      >
-                        {item.label}
-                      </a>
-                    </li>
+                    item.id !== 'admin' || isAdmin ? (
+                      <li key={item.id}>
+                        <a
+                          href={`#${item.id}`}
+                          onClick={(event) => handleNavigation(event, item.id)}
+                          aria-current={currentPage === item.id ? 'page' : undefined}
+                        >
+                          {item.label}
+                        </a>
+                      </li>
+                    ) : null
                   ))}
                 </ul>
               </fieldset>
