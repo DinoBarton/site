@@ -11,6 +11,19 @@ const blogPostSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true,
+    trim: true,
+  },
+  status: {
+    type: String,
+    enum: ['draft', 'published'],
+    default: 'draft',
+  },
+  publishedAt: Date,
   createdAt: {
     type: Date,
     default: Date.now,

@@ -14,6 +14,7 @@ const adminRouter = require('./routes/admin');
 const blogRouter = require('./routes/blog');
 const errorHandler = require('./middleware/errorHandler');
 const ticker = require('./routes/ticker');
+const systemStats = require('./routes/systemStats');
 
 // Middleware
 app.use(cors({
@@ -43,6 +44,7 @@ app.use('/api/guestbook', guestbookRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/blog', blogRouter);
 app.use('/api/ticker', ticker);
+app.use('/api/system-stats', systemStats);
 
 // Error handling middleware
 app.use(errorHandler);

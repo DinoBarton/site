@@ -1,0 +1,53 @@
+:root[data-theme='light'] {
+  --border-color: #332f2a;
+  --surface-color: #fffdf8;
+  --muted-text: #655f57;
+}
+
+:root[data-theme='light'] .box,
+:root[data-theme='light'] .ticker,
+:root[data-theme='light'] .ticker-item,
+:root[data-theme='light'] button,
+:root[data-theme='light'] input,
+:root[data-theme='light'] textarea {
+  border-radius: 8px;
+}
+
+:root[data-theme='light'] .ticker {
+  background: #fffdf8;
+  color: #24211d;
+  border-color: #332f2a;
+  box-shadow: 0 5px 18px rgba(78, 61, 35, 0.14);
+}
+
+:root[data-theme='light'] .ticker-item:hover {
+  background: #eee6d8;
+}
+
+:root[data-theme='light'] .ticker-item {
+  border-right-color: #d8cdbd;
+}
+
+:root[data-theme='light'] .ticker-price {
+  color: #24211d;
+}
+
+:root[data-theme='light'] a {
+  color: #59400e;
+}
+
+:root[data-theme='light'] .positive {
+  color: #0b8a4a;
+}
+
+:root[data-theme='light'] .negative {
+  color: #c52d2d;
+}
+
+:root[data-theme='light'] .unavailable {
+  color: #b9b1a5;
+}
+
+:root[data-theme='light'] .usage-ring {
+  --ring-track: #e2d9cb;
+}

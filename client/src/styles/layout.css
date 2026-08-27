@@ -1,0 +1,79 @@
+.site-shell {
+  width: 1100px;
+  margin: 0 auto;
+  padding: 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+.particles-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+}
+
+.topnav {
+  align-content: center;
+  display: flex;
+}
+
+.logo {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+}
+
+#header-component {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+#header-component h1,
+#header-component h2 {
+  margin: 0;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 220px 1fr 220px;
+  align-items: start;
+}
+
+#left-sidebar-component,
+#right-sidebar-component,
+#home {
+  min-width: 0;
+}
+
+.leftbar,
+.rightbar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.main {
+  margin-top: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bottom {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 12px;
+}
+
+.visitcount {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.footer {
+  text-align: center;
+}

@@ -4,8 +4,10 @@ import { useTypewriterTitle } from './hooks/useTypewriterTitle'
 import AdminLogin from './components/AdminLogin'
 import ParticlesBackground from './components/ParticlesBackground'
 import Ticker from './components/Ticker'
+import SystemStats from './components/SystemStats'
 import About from './pages/About'
 import BlogPage from './pages/BlogPage'
+import BlogPostPage from './pages/BlogPostPage'
 import Contact from './pages/Contact'
 import GuestbookPage from './pages/GuestbookPage'
 import Home from './pages/Home'
@@ -36,8 +38,12 @@ const pageComponents = {
 }
 
 function getPageFromLocation() {
-  const page = window.location.hash.slice(1)
+  const page = window.location.hash.slice(1).split('/')[0]
   return pageComponents[page] ? page : 'home'
+}
+
+function getPostIdentifier() {
+  return window.location.hash.slice(1).split('/')[1] || ''
 }
 
 function App() {
@@ -46,6 +52,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(getPageFromLocation)
   const [visitCounts, setVisitCounts] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [postIdentifier, setPostIdentifier] = useState(getPostIdentifier)
   const [isLightMode, setIsLightMode] = useState(() => {
     return localStorage.getItem('dinolibre-theme') === 'light'
   })
@@ -152,17 +159,22 @@ function App() {
   ]
 
   useEffect(() => {
-    const handleHashChange = () => setCurrentPage(getPageFromLocation())
+    const handleHashChange = () => {
+      setCurrentPage(getPageFromLocation())
+      setPostIdentifier(getPostIdentifier())
+    }
     window.addEventListener('hashchange', handleHashChange)
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
 
   const handleNavigation = (event, page) => {
     event.preventDefault()
-    window.location.hash = page
+    window.location.assign(`#${page}`)
   }
 
-  const Page = pageComponents[currentPage]
+  const Page = currentPage === 'blog' && postIdentifier
+    ? BlogPostPage
+    : pageComponents[currentPage]
 
   return (
     <>
@@ -216,7 +228,7 @@ function App() {
 
         <main id="home" className="main box">
           <div className="welcome-post">
-            <Page isAdmin={isAdmin} />
+            <Page isAdmin={isAdmin} identifier={postIdentifier} />
           </div>
         </main>
 
@@ -246,6 +258,8 @@ function App() {
               <legend>admin</legend>
               <AdminLogin isAdmin={isAdmin} onLoginChange={setIsAdmin} />
             </fieldset>
+
+            <SystemStats />
           </div>
         </aside>
       </div>

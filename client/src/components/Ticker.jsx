@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 
+const tickers = ["AAPL", "MSFT", "GOOGL", "AMZN"];
+
 export default function Ticker() {
   const [stocks, setStocks] = useState([]);
   const [selectedTicker, setSelectedTicker] = useState("AAPL");
-
-  // Polygon's basic plan rate-limits individual aggregate requests.
-  // Keep this list within that limit instead of making the whole tape fail.
-  const tickers = ["AAPL", "MSFT", "GOOGL", "AMZN"];
 
   useEffect(() => {
     async function fetchStocks() {
@@ -64,10 +62,6 @@ export default function Ticker() {
 
     fetchStocks();
   }, []);
-
-  const selectedStock = stocks.find(
-    (stock) => stock.symbol === selectedTicker
-  );
 
   const formatPrice = (value) =>
     typeof value === "number" ? `$${value.toFixed(2)}` : "—";

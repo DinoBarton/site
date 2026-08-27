@@ -1,0 +1,17 @@
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}
+
+@media (max-width: 900px) {
+  #header-component,
+  .content,
+  .bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .site-shell {
+    width: 100%;
+  }
+}
