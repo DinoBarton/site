@@ -13,6 +13,7 @@ const guestbookRouter = require('./routes/guestbook');
 const adminRouter = require('./routes/admin');
 const blogRouter = require('./routes/blog');
 const errorHandler = require('./middleware/errorHandler');
+const ticker = require('./routes/ticker');
 
 // Middleware
 app.use(cors({
@@ -41,6 +42,7 @@ app.use('/api/visits', visitsRouter);
 app.use('/api/guestbook', guestbookRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/blog', blogRouter);
+app.use('/api/ticker', ticker);
 
 // Error handling middleware
 app.use(errorHandler);
