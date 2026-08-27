@@ -10,8 +10,11 @@ function Guestbook() {
 
   useEffect(() => {
     fetch(`${API_URL}/api/guestbook`)
-      .then((res) => res.json())
-      .then(setEntries)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Guestbook request failed (${res.status})`)
+        return res.json()
+      })
+      .then((data) => setEntries(Array.isArray(data) ? data : []))
       .catch((error) => console.error(error))
   }, [])
 
@@ -29,6 +32,9 @@ function Guestbook() {
         body: JSON.stringify({ name: trimmedName, message: trimmedMessage }),
       })
       const entry = await response.json()
+      if (!response.ok) {
+        throw new Error(entry.message || `Guestbook request failed (${response.status})`)
+      }
       setEntries((prev) => [entry, ...prev])
       setName('')
       setMessage('')

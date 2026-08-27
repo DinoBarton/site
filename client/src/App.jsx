@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { useTypewriterTitle } from './hooks/useTypewriterTitle'
-import Guestbook from './components/Guestbook'
-import Blog from './components/Blog'
 import AdminLogin from './components/AdminLogin'
+import ParticlesBackground from './components/ParticlesBackground'
+import Ticker from './components/Ticker'
+import About from './pages/About'
+import BlogPage from './pages/BlogPage'
+import Contact from './pages/Contact'
+import GuestbookPage from './pages/GuestbookPage'
+import Home from './pages/Home'
+import Links from './pages/Links'
+import Projects from './pages/Projects'
 
 const TAB_TITLES = ['Dinos website', 'welcome!']
 
@@ -18,15 +25,37 @@ function formatLondonTime() {
 }
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const pageComponents = {
+  home: Home,
+  about: About,
+  blog: BlogPage,
+  projects: Projects,
+  links: Links,
+  contact: Contact,
+  guestbook: GuestbookPage,
+}
+
+function getPageFromLocation() {
+  const page = window.location.hash.slice(1)
+  return pageComponents[page] ? page : 'home'
+}
 
 function App() {
   const [londonTime, setLondonTime] = useState(formatLondonTime)
   const [weatherTheme, setWeatherTheme] = useState('weather-default')
-  const [currentPage, setCurrentPage] = useState('home')
+  const [currentPage, setCurrentPage] = useState(getPageFromLocation)
   const [visitCounts, setVisitCounts] = useState(null)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [isLightMode, setIsLightMode] = useState(() => {
+    return localStorage.getItem('dinolibre-theme') === 'light'
+  })
 
   useTypewriterTitle(TAB_TITLES, { typeSpeed: 150, pauseTime: 3000 })
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = isLightMode ? 'light' : 'dark'
+    localStorage.setItem('dinolibre-theme', isLightMode ? 'light' : 'dark')
+  }, [isLightMode])
 
   useEffect(() => {
     fetch(`${API_URL}/api/admin/me`, { credentials: 'include' })
@@ -122,60 +151,30 @@ function App() {
     { id: 'guestbook', label: 'guestbook' },
   ]
 
-  const pageContent = {
-    home: {
-      title: 'welcome to my website',
-      lines: [
-        'placeholder',
-        'placeholder',
-      ],
-    },
-    about: {
-      title: 'about me',
-      lines: [
-        'placeholder',
-        'placeholder',
-      ],
-    },
-    blog: {
-      title: 'blog',
-      lines: [
-        'placeholder',
-        'placeholder',
-      ],
-    },
-    projects: {
-      title: 'projects',
-      lines: [
-        'placeholder',
-        'placeholder',
-      ],
-    },
-    links: {
-      title: 'links',
-      lines: [
-        'placeholder',
-        'placeholder',
-      ],
-    },
-    contact: {
-      title: 'contact',
-      lines: [
-        'placeholder',
-        'placeholder',
-      ],
-    },
+  useEffect(() => {
+    const handleHashChange = () => setCurrentPage(getPageFromLocation())
+    window.addEventListener('hashchange', handleHashChange)
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
+
+  const handleNavigation = (event, page) => {
+    event.preventDefault()
+    window.location.hash = page
   }
 
+  const Page = pageComponents[currentPage]
+
   return (
-    <div className="site-shell">
-      <div className="mobile-nav-component">
-        <div className="topnav box">
-          <a href="#" className="logo">
-            Dino's corner
+    <>
+      <ParticlesBackground />
+      <div className="site-shell">
+        <div className="topnav">
+          <a href="#home" className="logo">
+            <h1>{'>> DINO\'S WEBSITE'}</h1>
           </a>
-        </div>
       </div>
+
+      <Ticker />
 
       {/*<header id="header-component">
         <div className="header box">
@@ -186,17 +185,14 @@ function App() {
       <div className="content">
         <aside id="left-sidebar-component">
           <div className="leftbar">
-            <div className="side-box box">
-              <h2>navigation</h2>
+            <fieldset className="side-box box">
+              <legend>navigation</legend>
               <ul className="nav-list">
                 {navItems.map((item) => (
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      onClick={(event) => {
-                        event.preventDefault()
-                        setCurrentPage(item.id)
-                      }}
+                      onClick={(event) => handleNavigation(event, item.id)}
                       aria-current={currentPage === item.id ? 'page' : undefined}
                     >
                       {item.label}
@@ -204,63 +200,52 @@ function App() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </fieldset>
 
-            <div className="side-box box">
-              <h2>status</h2>
+            <fieldset className="side-box box">
+              <legend>status</legend>
               <p>working on layout tests</p>
-            </div>
+            </fieldset>
 
-            <div className="side-box box">
-              <h2>changelog</h2>
+            <fieldset className="side-box box">
+              <legend>changelog</legend>
               <p>updates</p>
-            </div>
+            </fieldset>
           </div>
         </aside>
 
         <main id="home" className="main box">
           <div className="welcome-post">
-            {currentPage === 'guestbook' ? (
-              <>
-                <h2>guestbook</h2>
-                <Guestbook />
-              </>
-            ) : currentPage === 'blog' ? (
-              <>
-                <h2>blog</h2>
-                <hr />
-                <Blog isAdmin={isAdmin} />
-              </>
-            ) : (
-              <>
-                <h2>{pageContent[currentPage].title}</h2>
-                {pageContent[currentPage].lines.map((line) => (
-                  <p key={line}>{line}</p>
-                ))}
-              </>
-            )}
+            <Page isAdmin={isAdmin} />
           </div>
         </main>
 
         <aside id="right-sidebar-component">
           <div className="rightbar">
-            <div className="side-box box">
-              <h2>style</h2>
-              <p>style placeholder</p>
-            </div>
-            <div className="side-box box">
-              <h2>buttons area</h2>
+            <fieldset className="side-box box">
+              <legend>style</legend>
+              <label className="theme-toggle">
+                <span>light mode</span>
+                <input
+                  type="checkbox"
+                  checked={isLightMode}
+                  onChange={(event) => setIsLightMode(event.target.checked)}
+                />
+                <span className="theme-switch" aria-hidden="true" />
+              </label>
+            </fieldset>
+            <fieldset className="side-box box">
+              <legend>buttons area</legend>
               <p>widget placeholders</p>
-            </div>
-            <div className={`side-box box my-time ${weatherTheme}`}>
-              <h2>my time (London)</h2>
+            </fieldset>
+            <fieldset className={`side-box box my-time ${weatherTheme}`}>
               <p>{londonTime}</p>
-            </div>
+            </fieldset>
 
-            <div className="side-box box admin-box">
-              <h2>admin</h2>
+            <fieldset className="side-box box admin-box">
+              <legend>admin</legend>
               <AdminLogin isAdmin={isAdmin} onLoginChange={setIsAdmin} />
-            </div>
+            </fieldset>
           </div>
         </aside>
       </div>
@@ -279,6 +264,7 @@ function App() {
         <footer className="footer box">© Dino</footer>
       </div>
     </div>
+    </>
   )
 }
 
