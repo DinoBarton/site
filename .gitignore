@@ -41,3 +41,6 @@ client/build/
 
 # Server
 server/node_modules/
+
+# Local planning notes
+FEATURE-IDEAS.md
