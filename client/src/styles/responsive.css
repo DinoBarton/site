@@ -1,5 +1,6 @@
 @media (prefers-reduced-motion: reduce) {
-  .ticker-track {
+  .ticker-track,
+  .theme-cat {
     animation: none;
   }
 }
@@ -13,6 +14,11 @@
 
   .site-shell {
     width: 100%;
+  }
+
+  .theme-cat {
+    width: min(34vw, 220px);
+    height: min(34vh, 220px);
   }
 }
 

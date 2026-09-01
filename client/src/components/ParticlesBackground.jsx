@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const PARTICLES_CONFIG = {
   particles: {
@@ -39,6 +39,9 @@ const PARTICLES_CONFIG = {
 }
 
 function ParticlesBackground() {
+  const [fps, setFps] = useState(null)
+  const [particlesDisabled, setParticlesDisabled] = useState(false)
+
   useEffect(() => {
     let cancelled = false
 
@@ -70,7 +73,48 @@ function ParticlesBackground() {
     }
   }, [])
 
-  return <div id="particles-js" className="particles-background" />
+  useEffect(() => {
+    let frameId
+    let windowStart = performance.now()
+    let frameCount = 0
+    let lowFpsWindows = 0
+    let stopped = false
+
+    const measure = (timestamp) => {
+      frameCount += 1
+      const elapsed = timestamp - windowStart
+
+      if (elapsed >= 1000) {
+        const currentFps = Math.round((frameCount * 1000) / elapsed)
+        setFps(currentFps)
+        lowFpsWindows = currentFps < 40 ? lowFpsWindows + 1 : 0
+
+        if (lowFpsWindows >= 3 && !stopped) {
+          const particleInstance = window.pJSDom?.[0]?.pJS
+          particleInstance?.fn?.vendors?.destroypJS()
+          stopped = true
+          setParticlesDisabled(true)
+        }
+
+        windowStart = timestamp
+        frameCount = 0
+      }
+
+      if (!stopped) frameId = requestAnimationFrame(measure)
+    }
+
+    frameId = requestAnimationFrame(measure)
+    return () => cancelAnimationFrame(frameId)
+  }, [])
+
+  return (
+    <>
+      <div id="particles-js" className="particles-background" />
+      <div className="fps-counter" aria-live="polite">
+        {particlesDisabled ? 'particles off' : `fps: ${fps ?? '--'}`}
+      </div>
+    </>
+  )
 }
 
 export default ParticlesBackground

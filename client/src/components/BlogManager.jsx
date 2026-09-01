@@ -212,7 +212,7 @@ function BlogManager() {
       <div className="blog-manager-list">
         <div className="admin-section-heading">
           <h4>all posts</h4>
-          <span>{posts.filter((post) => (post.status || 'published') === 'published').length} published / {posts.filter((post) => post.status === 'draft').length} drafts</span>
+          <span><span className="numeric-value">{posts.filter((post) => (post.status || 'published') === 'published').length}</span> published / <span className="numeric-value">{posts.filter((post) => post.status === 'draft').length}</span> drafts</span>
         </div>
         {isLoading && <p>loading posts...</p>}
         {!isLoading && posts.length === 0 && <p>No posts yet.</p>}

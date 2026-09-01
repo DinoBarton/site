@@ -79,6 +79,28 @@
 .welcome-post h2 { margin-top: 0; }
 .content-section h3 { margin: 0; }
 
+.presence-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 0;
+  text-align: center;
+}
+
+.presence-indicator {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  border-radius: 50%;
+  background: #999;
+  box-shadow: 0 0 0 2px rgba(153, 153, 153, 0.18);
+}
+
+.presence-status-online .presence-indicator { background: #22c55e; box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.18); }
+.presence-status-idle .presence-indicator { background: #d59b28; box-shadow: 0 0 0 2px rgba(213, 155, 40, 0.18); }
+.presence-status-dnd .presence-indicator { background: #ef4444; box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.18); }
+
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -122,9 +144,11 @@
 
 .guestbook, .blog { display: flex; flex-direction: column; gap: 12px; }
 .guestbook-form, .blog-form { display: flex; flex-direction: column; gap: 8px; }
+.guestbook-form input, .guestbook-form textarea,
+.blog-form input:not([type='file']), .blog-form textarea { font-family: monospace; }
 .guestbook-entries { display: flex; flex-direction: column; gap: 10px; }
 .guestbook-entry { border: 1px dashed #777; border-radius: 6px; padding: 8px; transition: background-color 0.25s ease, border-color 0.25s ease, border-radius 0.25s ease, color 0.25s ease; }
-.guestbook-entry p { margin: 4px 0 0; }
+.guestbook-entry p, .admin-entry-row p { margin: 4px 0 0; font-family: monospace; }
 
 .blog-form { border: 1px dashed #777; border-radius: 6px; padding: 10px; transition: background-color 0.25s ease, border-color 0.25s ease, border-radius 0.25s ease, color 0.25s ease; }
 .blog-form-actions, .blog-post-actions { display: flex; gap: 8px; }
@@ -135,7 +159,7 @@
 .blog-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; min-width: 0; margin: 0 0 12px; padding: 12px; border: 1px solid #777; break-inside: avoid; }
 .blog-card img, .blog-featured-image { width: 100%; max-width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .blog-card h3 { margin: 0 0 4px; }
-.blog-card p { margin: 0; }
+.blog-card p, .blog-markdown { margin: 0; font-family: monospace; }
 .blog-card small, .blog-post-page small { color: var(--muted-text, #aaa); }
 .blog-date, .blog-number, .numeric-value { font-family: monospace; font-variant-numeric: tabular-nums; }
 .blog-post-page { display: flex; flex-direction: column; gap: 10px; }

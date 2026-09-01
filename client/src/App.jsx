@@ -54,6 +54,9 @@ function App() {
   const [isLightMode, setIsLightMode] = useState(() => {
     return localStorage.getItem('dinolibre-theme') === 'light'
   })
+  const [isCatMode, setIsCatMode] = useState(() => {
+    return localStorage.getItem('dinolibre-cat-mode') === 'neko'
+  })
 
   useTypewriterTitle(TAB_TITLES, { typeSpeed: 150, pauseTime: 3000 })
 
@@ -61,6 +64,38 @@ function App() {
     document.documentElement.dataset.theme = isLightMode ? 'light' : 'dark'
     localStorage.setItem('dinolibre-theme', isLightMode ? 'light' : 'dark')
   }, [isLightMode])
+
+  useEffect(() => {
+    localStorage.setItem('dinolibre-cat-mode', isCatMode ? 'neko' : 'corner')
+
+    if (!isCatMode) {
+      window.neko?.destroy()
+      window.neko = null
+      return undefined
+    }
+
+    const startNeko = () => {
+      if (!window.neko && window.createNeko) window.neko = window.createNeko()
+    }
+    const existingScript = document.querySelector('script[data-neko-js]')
+
+    if (window.createNeko) {
+      startNeko()
+    } else if (existingScript) {
+      existingScript.addEventListener('load', startNeko, { once: true })
+    } else {
+      const script = document.createElement('script')
+      script.src = 'https://louisabraham.github.io/nekojs/neko.js'
+      script.dataset.nekoJs = 'true'
+      script.onload = startNeko
+      document.body.appendChild(script)
+    }
+
+    return () => {
+      window.neko?.destroy()
+      window.neko = null
+    }
+  }, [isCatMode])
 
   useEffect(() => {
     fetch(`${API_URL}/api/admin/me`, { credentials: 'include' })
@@ -103,6 +138,8 @@ function App() {
       onLoginChange={setIsAdmin}
       isLightMode={isLightMode}
       onThemeChange={setIsLightMode}
+      isCatMode={isCatMode}
+      onCatModeChange={setIsCatMode}
       visitCounts={visitCounts}
     >
       <Page isAdmin={isAdmin} identifier={previewToken ? 'preview' : postIdentifier} previewToken={previewToken} />

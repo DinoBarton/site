@@ -1,8 +1,12 @@
+import { useEffect, useState } from 'react'
 import AdminLogin from './AdminLogin'
 import ParticlesBackground from './ParticlesBackground'
+import StatusWidget from './StatusWidget'
 import SystemStats from './SystemStats'
 import Ticker from './Ticker'
 import WeatherWidget from './WeatherWidget'
+import cat1 from '../assets/Cat1.png'
+import cat2 from '../assets/Cat2.png'
 
 const navItems = [
   { id: 'home', label: 'home' },
@@ -23,8 +27,28 @@ function AppLayout({
   onLoginChange,
   isLightMode,
   onThemeChange,
+  isCatMode,
+  onCatModeChange,
   visitCounts,
 }) {
+  const [isCatMounted, setIsCatMounted] = useState(isCatMode)
+  const [isCatVisible, setIsCatVisible] = useState(isCatMode)
+
+  useEffect(() => {
+    if (isCatMode) {
+      setIsCatMounted(true)
+      requestAnimationFrame(() => setIsCatVisible(true))
+    } else {
+      setIsCatVisible(false)
+    }
+  }, [isCatMode])
+
+  const handleCatAnimationEnd = (event) => {
+    if (!isCatMode && event.animationName === 'theme-cat-disappear') {
+      setIsCatMounted(false)
+    }
+  }
+
   return (
     <>
       <ParticlesBackground />
@@ -61,7 +85,7 @@ function AppLayout({
 
               <fieldset className="side-box box">
                 <legend>status</legend>
-                <p>working on layout tests</p>
+                <StatusWidget />
               </fieldset>
 
               <fieldset className="side-box box">
@@ -85,6 +109,15 @@ function AppLayout({
                     type="checkbox"
                     checked={isLightMode}
                     onChange={(event) => onThemeChange(event.target.checked)}
+                  />
+                  <span className="theme-switch" aria-hidden="true" />
+                </label>
+                <label className="theme-toggle">
+                  <span>cat mode</span>
+                  <input
+                    type="checkbox"
+                    checked={isCatMode}
+                    onChange={(event) => onCatModeChange(event.target.checked)}
                   />
                   <span className="theme-switch" aria-hidden="true" />
                 </label>
@@ -118,9 +151,22 @@ function AppLayout({
               'loading visitor count...'
             )}
           </div>
-          <footer className="footer box">© Dino</footer>
+          <footer className="footer box">
+            <span>© <span className="numeric-value">{new Date().getFullYear()}</span> - Dino</span>
+            <span className="footer-quote">“treat everyday as monday morning, treat every month like a January” - cench</span>
+          </footer>
         </div>
       </div>
+        {isCatMounted && (
+          <div
+            className={`theme-cat ${isCatVisible ? 'is-visible' : 'is-hiding'}`}
+            onAnimationEnd={handleCatAnimationEnd}
+            aria-hidden="true"
+          >
+            <img className="theme-cat-light" src={cat1} alt="" />
+            <img className="theme-cat-dark" src={cat2} alt="" />
+          </div>
+        )}
     </>
   )
 }

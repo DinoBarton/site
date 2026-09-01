@@ -43,7 +43,7 @@ function GuestbookManager() {
     <section className="admin-section">
       <div className="admin-section-heading">
         <h3>guestbook moderation</h3>
-        <span>{entries.length} entries</span>
+        <span><span className="numeric-value">{entries.length}</span> entries</span>
       </div>
       {error && <p className="admin-login-error">{error}</p>}
       {isLoading && <p>loading entries...</p>}
