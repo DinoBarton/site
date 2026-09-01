@@ -4,23 +4,35 @@
   box-sizing: border-box;
   overflow-wrap: break-word;
   word-break: break-word;
-  transition: border-color 0.15s ease;
+  transition: border-color 0.25s ease, border-radius 0.25s ease, background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
   background-color: var(--surface-color, #000);
   color: var(--page-text);
 }
 
 .box:hover {
-  border-color: #A020F0;
+  border-color: var(--accent-color, #A020F0);
 }
 
 .box:hover > h2 {
-  color: #A020F0;
-  transition: color 0.15s ease;
+  color: var(--accent-color, #A020F0);
+  transition: color 0.25s ease;
 }
 
 hr {
   border: none;
   border-top: 1px solid var(--border-color, #f5f5f5);
+  transition: border-color 0.25s ease;
+}
+
+button,
+input,
+textarea,
+select {
+  transition: background-color 0.25s ease, border-color 0.25s ease, border-radius 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+a {
+  transition: color 0.25s ease;
 }
 
 .h1 {

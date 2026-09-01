@@ -51,9 +51,11 @@ function BlogPostPage({ identifier, previewToken }) {
       <h2>{post.title}</h2>
       {post.featuredImage?.url && <img className="blog-featured-image" src={post.featuredImage.url} alt={post.featuredImage.alt || ''} />}
       <small>
-        {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
-        {' · '}{post.readingTimeMinutes} min read
-        {' · '}{post.viewCount || 0} views
+        <time className="blog-date" dateTime={post.publishedAt || post.createdAt}>
+          {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
+        </time>
+        {' · '}<span className="blog-number">{post.readingTimeMinutes}</span> min read
+        {' · '}<span className="blog-number">{post.viewCount || 0}</span> views
         {post.category && ` · ${post.category}`}
       </small>
       <div className="blog-markdown"><ReactMarkdown rehypePlugins={[rehypeSanitize]}>{post.content}</ReactMarkdown></div>
@@ -63,7 +65,7 @@ function BlogPostPage({ identifier, previewToken }) {
           <h3>related posts</h3>
           {post.relatedPosts.map((related) => (
             <a key={related._id} href={`#blog/${related.slug || related._id}`}>
-              {related.title} <small>{related.readingTimeMinutes} min read</small>
+              {related.title} <small><span className="blog-number">{related.readingTimeMinutes}</span> min read</small>
             </a>
           ))}
         </section>

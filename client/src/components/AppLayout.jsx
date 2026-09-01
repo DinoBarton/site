@@ -31,7 +31,7 @@ function AppLayout({
       <div className="site-shell">
         <div className="topnav">
           <a href="#home" className="logo">
-            <h1>{'>> DINO\'S WEBSITE'}</h1>
+            <h1>{'DINOLIBRE.COM'}</h1>
           </a>
         </div>
 
@@ -111,8 +111,8 @@ function AppLayout({
           <div className="visitcount box">
             {visitCounts ? (
               <>
-                <span>total visits: {visitCounts.totalVisits}</span>
-                <span>unique visitors: {visitCounts.uniqueVisitors}</span>
+                <span>total visits: <span className="numeric-value">{visitCounts.totalVisits}</span></span>
+                <span>unique visitors: <span className="numeric-value">{visitCounts.uniqueVisitors}</span></span>
               </>
             ) : (
               'loading visitor count...'

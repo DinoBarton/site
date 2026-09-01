@@ -1,9 +1,3 @@
-:root[data-theme='light'] {
-  --border-color: #332f2a;
-  --surface-color: #fffdf8;
-  --muted-text: #655f57;
-}
-
 :root[data-theme='light'] .box,
 :root[data-theme='light'] .ticker,
 :root[data-theme='light'] .ticker-item,
@@ -59,4 +53,8 @@
 :root[data-theme='dark'] .blog-category,
 :root[data-theme='dark'] .blog-tags span {
   color: #A020F0;
+}
+
+:root[data-theme='dark'] .contact-icon {
+  filter: invert(1);
 }

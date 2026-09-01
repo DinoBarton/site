@@ -61,6 +61,19 @@ function hashPreviewToken(token) {
   return crypto.createHash('sha256').update(token).digest('hex');
 }
 
+function publicOrigin(req) {
+  return (process.env.PUBLIC_ORIGIN || `${req.protocol}://${req.get('host')}`).replace(/\/$/, '');
+}
+
+function escapeXml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
 function postMatchesSearch(post, query) {
   if (!query) return true;
   const search = query.toLowerCase();
@@ -98,6 +111,41 @@ router.get('/admin', requireAdmin, async (req, res) => {
   try {
     const posts = await BlogPost.find().sort({ updatedAt: -1, createdAt: -1 });
     res.json(posts.map((post) => serializePost(post)));
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Public: RSS feed of published posts
+router.get('/rss.xml', async (req, res) => {
+  try {
+    const origin = publicOrigin(req);
+    const posts = await BlogPost.find(publicPostFilter())
+      .sort({ publishedAt: -1, createdAt: -1 })
+      .limit(50);
+    const items = posts.map((post) => {
+      const publishedAt = post.publishedAt || post.createdAt;
+      const url = `${origin}/#blog/${encodeURIComponent(post.slug || post._id)}`;
+      return `
+    <item>
+      <title>${escapeXml(post.title)}</title>
+      <link>${escapeXml(url)}</link>
+      <guid isPermaLink="true">${escapeXml(url)}</guid>
+      <pubDate>${new Date(publishedAt).toUTCString()}</pubDate>
+      <description>${escapeXml(post.content)}</description>
+    </item>`;
+    }).join('');
+
+    const feed = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Dinolibre blog</title>
+    <link>${escapeXml(origin)}/#blog</link>
+    <description>Latest posts from Dinolibre</description>
+    <language>en-gb</language>${items}
+  </channel>
+</rss>`;
+    res.type('application/rss+xml').send(feed);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

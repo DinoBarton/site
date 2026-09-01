@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 const PARTICLES_CONFIG = {
   particles: {
-    number: { value: 200, density: { enable: true, value_area: 800 } },
+    number: { value: 128, density: { enable: true, value_area: 800 } },
     color: { value: '#524C42' },
     shape: { type: 'circle' },
     opacity: { value: 0.4, random: true },

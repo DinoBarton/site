@@ -53,9 +53,11 @@ function Blog() {
             )}
             <h3>{post.title}</h3>
             <small>
-              {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
-              {' · '}{post.readingTimeMinutes} min read
-              {' · '}{post.viewCount || 0} views
+              <time className="blog-date" dateTime={post.publishedAt || post.createdAt}>
+                {new Date(post.publishedAt || post.createdAt).toLocaleDateString()}
+              </time>
+              {' · '}<span className="blog-number">{post.readingTimeMinutes}</span> min read
+              {' · '}<span className="blog-number">{post.viewCount || 0}</span> views
             </small>
             {post.category && <span className="blog-category">{post.category}</span>}
             <p>{post.content.slice(0, 180)}{post.content.length > 180 ? '...' : ''}</p>
