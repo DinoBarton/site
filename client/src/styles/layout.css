@@ -75,6 +75,11 @@
   gap: 12px;
 }
 
+.main h1,
+.main h2 {
+  margin: 0 0 12px;
+}
+
 .bottom {
   display: grid;
   grid-template-columns: 1fr 2fr;

@@ -15,6 +15,7 @@ const adminRouter = require('./routes/admin');
 const blogRouter = require('./routes/blog');
 const errorHandler = require('./middleware/errorHandler');
 const ticker = require('./routes/ticker');
+const githubRouter = require('./routes/github');
 const systemStats = require('./routes/systemStats');
 const uploadsRouter = require('./routes/uploads');
 
@@ -50,6 +51,7 @@ app.use('/api/guestbook', guestbookRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/blog', blogRouter);
 app.use('/api/ticker', ticker);
+app.use('/api/github', githubRouter);
 app.use('/api/system-stats', systemStats);
 app.use('/api/uploads', uploadsRouter);
 

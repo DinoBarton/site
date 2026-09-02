@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import AdminLogin from './AdminLogin'
+import Changelog from './Changelog'
 import ParticlesBackground from './ParticlesBackground'
 import StatusWidget from './StatusWidget'
 import SystemStats from './SystemStats'
@@ -90,7 +91,7 @@ function AppLayout({
 
               <fieldset className="side-box box">
                 <legend>changelog</legend>
-                <p>updates</p>
+                <Changelog />
               </fieldset>
             </div>
           </aside>

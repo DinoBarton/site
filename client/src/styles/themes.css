@@ -55,6 +55,10 @@
   color: #A020F0;
 }
 
+:root[data-theme='dark'] .theme-toggle input:checked + .theme-switch {
+  background: #A020F0;
+}
+
 :root[data-theme='dark'] .contact-icon {
   filter: invert(1);
 }

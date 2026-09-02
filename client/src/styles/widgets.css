@@ -79,6 +79,21 @@
 .welcome-post h2 { margin-top: 0; }
 .content-section h3 { margin: 0; }
 
+.changelog {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.changelog a {
+  overflow-wrap: anywhere;
+}
+
+.changelog time {
+  color: var(--muted-text, #aaa);
+  font-size: 0.8rem;
+}
+
 .presence-status {
   display: flex;
   align-items: center;
