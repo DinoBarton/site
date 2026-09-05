@@ -5,12 +5,8 @@ function Home() {
       <p>
         Welcome! This website is a little summer project I have worked on, hope you enjoy, make sure you sign the guestbook before you leave!
       </p>
-      <h2>about me</h2>
       <p>
-        Hello! my name is Dino and I am a developer. I'm from the United Kingdom. I'm also proud Spanish-Colombian 🇪🇸 🇨🇴 
-      </p>
-      <p>
-        Currently Im studying A-levels doing Maths, Further Maths, Computer Science and Physics.
+        Im passionate about programming, Learn more about me here --&gt; <a href="/#about">About Me</a>
       </p>
     </>
   )

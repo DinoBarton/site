@@ -188,6 +188,47 @@
 .contact-link { display: inline-flex; align-items: center; gap: 8px; }
 .contact-icon { width: 20px; height: 20px; flex: 0 0 20px; }
 .contact-row { margin: 6px 0; }
+.about-section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 18px;
+  align-items: start;
+}
+.about-copy h2 { margin-top: 0; }
+.education-section { margin-top: 18px; }
+.education-section summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  cursor: pointer;
+  font-family: monospace;
+  list-style-position: outside;
+}
+.education-section summary::marker { color: var(--accent-color, #a020f0); }
+.education-heading { font-size: 1.1rem; font-weight: 700; }
+.education-summary { color: var(--muted-text, #aaa); font-size: 0.8rem; }
+.education-list { display: flex; flex-direction: column; gap: 4px; }
+.education-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 8px;
+  border-top: 1px dashed #777;
+  font-family: monospace;
+  font-size: 0.85rem;
+}
+.education-row strong { color: var(--accent-color, #a020f0); white-space: nowrap; }
+.about-portrait {
+  display: block;
+  width: 150px;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top;
+  border: 1px solid var(--border-color, #f5f5f5);
+  border-radius: 4px;
+  box-shadow: 4px 4px 0 var(--accent-color, #a020f0);
+}
 .blog-category, .blog-tags span, .blog-preview-banner { color: var(--accent-color, #d59b28); font-size: 0.8rem; }
 .blog-tags { display: flex; flex-wrap: wrap; gap: 6px; }
 .blog-markdown { line-height: 1.65; }

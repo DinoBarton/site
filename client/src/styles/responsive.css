@@ -32,4 +32,13 @@
   .blog-posts {
     column-count: 1;
   }
+
+  .about-section {
+    grid-template-columns: minmax(0, 1fr) 105px;
+    gap: 12px;
+  }
+
+  .about-portrait {
+    width: 105px;
+  }
 }

@@ -26,6 +26,20 @@
   border-right-color: #d8cdbd;
 }
 
+:root[data-theme='light'] .ticker-close {
+  border-color: #d8cdbd;
+  border-radius: 0;
+  background: #fffdf8;
+  color: #59400e;
+}
+
+:root[data-theme='light'] .ticker-close:hover,
+:root[data-theme='light'] .ticker-close:focus-visible {
+  border-color: #d59b28;
+  background: #eee6d8;
+  color: #24211d;
+}
+
 :root[data-theme='light'] .ticker-price {
   color: #24211d;
 }

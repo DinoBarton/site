@@ -5,6 +5,7 @@ const tickers = ["AAPL", "MSFT", "GOOGL", "AMZN"];
 export default function Ticker() {
   const [stocks, setStocks] = useState([]);
   const [selectedTicker, setSelectedTicker] = useState("AAPL");
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     async function fetchStocks() {
@@ -68,8 +69,12 @@ export default function Ticker() {
 
   const tickerItems = [...stocks, ...stocks];
 
+  if (!isVisible) {
+    return null;
+  }
+
   return (
-    <div>
+    <div className="ticker-container">
       <div className="ticker" aria-label="Market ticker">
         <div className="ticker-track">
           {tickerItems.map((stock, index) => {
@@ -96,7 +101,15 @@ export default function Ticker() {
           })}
         </div>
       </div>
-
+      <button
+        className="ticker-close"
+        onClick={() => setIsVisible(false)}
+        aria-label="Close stock ticker"
+        title="Close stock ticker"
+        type="button"
+      >
+        x
+      </button>
     </div>
   );
 }
