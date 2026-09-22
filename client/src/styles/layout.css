@@ -1,5 +1,5 @@
 .site-shell {
-  width: 1100px;
+  width: min(1100px, 100%);
   margin: 0 auto;
   padding: 12px 12px;
   display: flex;
@@ -29,6 +29,10 @@
 .topnav {
   align-content: center;
   display: flex;
+}
+
+.mobile-nav {
+  display: none;
 }
 
 .logo {

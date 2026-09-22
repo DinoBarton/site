@@ -52,7 +52,7 @@ function AppLayout({
 
   return (
     <>
-      <ParticlesBackground />
+      <ParticlesBackground isLightMode={isLightMode} />
       <div className="site-shell">
         <div className="topnav">
           <a href="#home" className="logo">
@@ -61,6 +61,21 @@ function AppLayout({
         </div>
 
         <Ticker />
+
+        <nav className="mobile-nav" aria-label="Mobile navigation">
+          {navItems.map((item) => (
+            item.id !== 'admin' || isAdmin ? (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(event) => handleNavigation(event, item.id)}
+                aria-current={currentPage === item.id ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ) : null
+          ))}
+        </nav>
 
         <div className="content">
           <aside id="left-sidebar-component">
@@ -122,11 +137,6 @@ function AppLayout({
                   />
                   <span className="theme-switch" aria-hidden="true" />
                 </label>
-              </fieldset>
-
-              <fieldset className="side-box box">
-                <legend>buttons area</legend>
-                <p>widget placeholders</p>
               </fieldset>
 
               <WeatherWidget />

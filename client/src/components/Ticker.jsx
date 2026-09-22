@@ -76,29 +76,36 @@ export default function Ticker() {
   return (
     <div className="ticker-container">
       <div className="ticker" aria-label="Market ticker">
-        <div className="ticker-track">
-          {tickerItems.map((stock, index) => {
-            const hasChange = typeof stock.changePercent === "number";
-            const isPositive = hasChange && stock.change >= 0;
+        <div className="ticker-scroll-window">
+          <div className="ticker-track">
+            {tickerItems.map((stock, index) => {
+              const hasChange = typeof stock.changePercent === "number";
+              const isPositive = hasChange && stock.change >= 0;
 
-            return (
-              <button
-                key={`${stock.symbol}-${index}`}
-                className="ticker-item"
-                onClick={() => setSelectedTicker(stock.symbol)}
-                aria-pressed={stock.symbol === selectedTicker}
-                type="button"
-              >
-                <span className="ticker-symbol">{stock.symbol}</span>
-                <span className="ticker-price">{formatPrice(stock.price)}</span>
-                <span className={`ticker-change ${hasChange ? (isPositive ? "positive" : "negative") : "unavailable"}`}>
-                  {hasChange
-                    ? `${isPositive ? "▲" : "▼"} ${formatPrice(Math.abs(stock.change))} (${stock.changePercent.toFixed(2)}%)`
-                    : "Change unavailable"}
-                </span>
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={`${stock.symbol}-${index}`}
+                  className="ticker-item"
+                  onClick={() => setSelectedTicker(stock.symbol)}
+                  aria-pressed={stock.symbol === selectedTicker}
+                  type="button"
+                >
+                  <span className="ticker-symbol">{stock.symbol}</span>
+                  <span className="ticker-price">{formatPrice(stock.price)}</span>
+                  <span className={`ticker-change ${hasChange ? (isPositive ? "positive" : "negative") : "unavailable"}`}>
+                    {hasChange
+                      ? `${isPositive ? "▲" : "▼"} ${formatPrice(Math.abs(stock.change))} (${stock.changePercent.toFixed(2)}%)`
+                      : "Change unavailable"}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="ticker-blog-panel">
+          <a className="ticker-blog-link" href="#blog">
+            Read my latest blog post
+          </a>
         </div>
       </div>
       <button

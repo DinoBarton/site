@@ -38,11 +38,13 @@ const PARTICLES_CONFIG = {
   retina_detect: true,
 }
 
-function ParticlesBackground() {
+function ParticlesBackground({ isLightMode }) {
   const [fps, setFps] = useState(null)
   const [particlesDisabled, setParticlesDisabled] = useState(false)
 
   useEffect(() => {
+    if (isLightMode) return undefined
+
     let cancelled = false
 
     // particles.js relies on arguments.callee, so it must run as a classic
@@ -70,10 +72,13 @@ function ParticlesBackground() {
 
     return () => {
       cancelled = true
+      window.pJSDom?.[0]?.pJS?.fn?.vendors?.destroypJS()
     }
-  }, [])
+  }, [isLightMode])
 
   useEffect(() => {
+    if (isLightMode) return undefined
+
     let frameId
     let windowStart = performance.now()
     let frameCount = 0
@@ -105,7 +110,9 @@ function ParticlesBackground() {
 
     frameId = requestAnimationFrame(measure)
     return () => cancelAnimationFrame(frameId)
-  }, [])
+  }, [isLightMode])
+
+  if (isLightMode) return null
 
   return (
     <>

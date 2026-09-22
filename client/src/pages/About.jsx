@@ -20,43 +20,43 @@ function About() {
               <strong>Grade 9</strong>
             </div>
             <div className="education-row">
-              <span>GCSE Computer Science — placeholder</span>
+              <span>GCSE Computer Science</span>
               <strong>Grade 9</strong>
             </div>
             <div className="education-row">
-              <span>GCSE Spanish — placeholder</span>
+              <span>GCSE Spanish</span>
               <strong>Grade 8</strong>
             </div>
             <div className="education-row">
-              <span>GCSE Physics — placeholder</span>
+              <span>GCSE Physics</span>
               <strong>Grade 7</strong>
             </div>
             <div className="education-row">
-              <span>GCSE Further Maths— placeholder</span>
+              <span>GCSE Further Maths</span>
               <strong>Grade 7</strong>
             </div>
             <div className="education-row">
-              <span>GCSE Biology — placeholder</span>
+              <span>GCSE Biology</span>
               <strong>Grade 7</strong>
             </div>
             <div className="education-row">
-              <span>GCSE Design & Technology — placeholder</span>
+              <span>GCSE Design & Technology</span>
               <strong>Grade 7</strong>
             </div>
             <div className="education-row">
-              <span>GCSE Business — placeholder</span>
+              <span>GCSE Business</span>
               <strong>Grade 7</strong>
             </div>
             <div className="education-row">
-              <span>GCSE Chemistry — placeholder</span>
+              <span>GCSE Chemistry</span>
               <strong>Grade 6</strong>
             </div>
             <div className="education-row">
-              <span>GCSE English Language — placeholder</span>
+              <span>GCSE English Language</span>
               <strong>Grade 6</strong>
             </div>
             <div className="education-row">
-              <span>GCSE English Literature — placeholder</span>
+              <span>GCSE English Literature</span>
               <strong>Grade 6</strong>
             </div>
           </div>

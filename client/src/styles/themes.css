@@ -1,10 +1,15 @@
 :root[data-theme='light'] .box,
-:root[data-theme='light'] .ticker,
-:root[data-theme='light'] .ticker-item,
 :root[data-theme='light'] button,
 :root[data-theme='light'] input,
 :root[data-theme='light'] textarea {
   border-radius: 8px;
+}
+
+:root[data-theme='light'] .ticker,
+:root[data-theme='light'] .ticker-item,
+:root[data-theme='light'] .ticker-blog-panel,
+:root[data-theme='light'] .ticker-blog-link {
+  border-radius: 0;
 }
 
 :root[data-theme='light'] .ticker {
@@ -16,6 +21,12 @@
 
 :root[data-theme='light'] .ticker-item:hover {
   background: #eee6d8;
+}
+
+:root[data-theme='light'] .ticker-blog-link:hover,
+:root[data-theme='light'] .ticker-blog-link:focus-visible {
+  background: #59400e;
+  color: #fffdf8;
 }
 
 :root[data-theme='light'] .box:hover {
